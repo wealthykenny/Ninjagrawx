@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurelia Equine | The Billionaire's Stable</title>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #1e1e1e;
+      background-color: #faf9f7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Luxury color palette */
+    :root {
+      --deep-forest: #0a2f2b;
+      --antique-gold: #c5a059;
+      --ivory: #fffff2;
+      --charcoal: #2b2b2b;
+      --sandstone: #d9cdb3;
+    }
+
+    /* Animation classes */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, rgba(10,47,43,0.95) 0%, rgba(10,47,43,0.8) 100%), url('https://images.unsplash.com/photo-1599232215809-7e7b3c3d8b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      color: var(--ivory);
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 3rem;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: var(--antique-gold);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .nav-links a {
+      color: var(--ivory);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--antique-gold);
+    }
+
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .hero-content h1 {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+      margin-bottom: 1.5rem;
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 2px 2px 20px rgba(197,160,89,0.3); }
+      100% { text-shadow: 2px 2px 40px rgba(197,160,89,0.8); }
+    }
+
+    .hero-content p {
+      font-size: 1.4rem;
+      max-width: 700px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .btn {
+      background-color: var(--antique-gold);
+      color: var(--deep-forest);
+      padding: 1.2rem 3rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 40px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      background-color: #dbb16a;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    /* sections general */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      color: var(--deep-forest);
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 3px;
+      background: var(--antique-gold);
+      margin: 1rem auto 0;
+    }
+
+    /* amenities */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .amenity-card {
+      background: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border-radius: 20px;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .amenity-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    }
+
+    .amenity-card i {
+      font-size: 3.5rem;
+      color: var(--antique-gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .amenity-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--deep-forest);
+    }
+
+    .amenity-card p {
+      color: #5a5a5a;
+      line-height: 1.6;
+    }
+
+    /* testimonials */
+    .testimonials {
+      background-color: var(--sandstone);
+      background-image: linear-gradient(145deg, #d9cdb3 0%, #e8ddc7 100%);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 30px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+    }
+
+    .testimonial-card:hover {
+      transform: scale(1.02);
+      background: white;
+    }
+
+    .testimonial-card .quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #2b2b2b;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .testimonial-card .quote i {
+      color: var(--antique-gold);
+      font-size: 1.8rem;
+      margin-right: 0.5rem;
+      opacity: 0.5;
+    }
+
+    .client {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .client img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--antique-gold);
+    }
+
+    .client-info h4 {
+      font-size: 1.2rem;
+      color: var(--deep-forest);
+    }
+
+    .client-info p {
+      font-size: 0.9rem;
+      color: #6b6b6b;
+    }
+
+    /* newsletter */
+    .newsletter {
+      background-color: var(--deep-forest);
+      color: var(--ivory);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      color: var(--ivory);
+    }
+
+    .newsletter .section-title::after {
+      background: var(--ivory);
+    }
+
+    .newsletter p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .newsletter-form input {
+      flex: 1 1 300px;
+      padding: 1.2rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      outline: 2px solid transparent;
+      transition: outline 0.2s;
+    }
+
+    .newsletter-form input:focus {
+      outline: 2px solid var(--antique-gold);
+    }
+
+    .newsletter-form .btn {
+      background-color: var(--antique-gold);
+      color: var(--deep-forest);
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    /* footer */
+    footer {
+      background: var(--charcoal);
+      color: #aaa;
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--antique-gold);
+    }
+
+    .social i {
+      font-size: 1.5rem;
+      margin: 0 0.8rem;
+      color: #aaa;
+      transition: color 0.3s;
+    }
+
+    .social i:hover {
+      color: var(--antique-gold);
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+      .nav-links {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">AURELIA</div>
+      <div class="nav-links">
+        <a href="#">ESTATE</a>
+        <a href="#">HERITAGE</a>
+        <a href="#">CONCIERGE</a>
+        <a href="#">PRESS</a>
+      </div>
+    </nav>
+    <div class="hero-content fade-in">
+      <h1>Where legends <br>rest & reign</h1>
+      <p>An exclusive equestrian sanctuary for the world's most discerning owners</p>
+      <a href="#" class="btn">Request an audience</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Intro / about -->
+    <section class="container fade-in">
+      <h2 class="section-title">The legacy estate</h2>
+      <p style="text-align: center; max-width: 900px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; color: #2b2b2b;">
+        Hidden within 2,000 acres of rolling pastures, Aurelia offers absolute privacy and uncompromising care for equine champions. 
+        Each stable is a private villa with climate control, 24k gold fittings, and a dedicated international team. 
+        Your horse doesn't just stay here—it reigns.
+      </p>
+    </section>
+
+    <!-- Amenities -->
+    <section class="container">
+      <h2 class="section-title fade-in">Beyond the stable</h2>
+      <div class="amenities-grid">
+        <div class="amenity-card fade-in">
+          <i class="fas fa-crown"></i>
+          <h3>Royal suites</h3>
+          <p>Private 200m² suites with orthopedic flooring, spa baths, and curated art. Your horse’s comfort mirrors your own.</p>
+        </div>
+        <div class="amenity-card fade-in">
+          <i class="fas fa-jet-fighter"></i>
+          <h3>Global concierge</h3>
+          <p>From private jets for equine transport to Michelin-star catering for your guests—every detail is anticipated.</p>
+        </div>
+        <div class="amenity-card fade-in">
+          <i class="fas fa-tree"></i>
+          <h3>Secretariat track</h3>
+          <p>A private turf track designed by the world’s leading racecourse architects, with video analysis from every angle.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials (fake reviews) -->
+    <section class="testimonials">
+      <div class="container">
+        <h2 class="section-title fade-in">What our members say</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card fade-in">
+            <div class="quote">
+              <i class="fas fa-quote-left"></i> Aurelia is the only place I trust with my entire string. It's more exclusive than any club I've joined. The privacy and perfection are absolute.
+            </div>
+            <div class="client">
+              <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Richard Kensington">
+              <div class="client-info">
+                <h4>Richard Kensington</h4>
+                <p>Hedge fund chairman · 12 champions boarded</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <div class="quote">
+              <i class="fas fa-quote-left"></i> My daughter's show jumpers receive better care here than most humans. The team even remembered each horse's birthday with a carrot cake.
+            </div>
+            <div class="client">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Victoria Sterling">
+              <div class="client-info">
+                <h4>Victoria Sterling</h4>
+                <p>Tech founder · third generation owner</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <div class="quote">
+              <i class="fas fa-quote-left"></i> I've stabled in Kentucky, Dubai, and Normandy. Aurelia's understated elegance and security are unmatched. It's simply the best.
+            </div>
+            <div class="client">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Alistair Moore">
+              <div class="client-info">
+                <h4>Alistair Moore</h4>
+                <p>International breeder · owner of Triple Crown winner</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+      <div class="container">
+        <h2 class="section-title fade-in">The Aurelia chronicle</h2>
+        <p class="fade-in">Private sales, new bloodlines, and exclusive events. Our newsletter is never forwarded—it remains in your trusted circle.</p>
+        <form class="newsletter-form fade-in" id="newsletterForm">
+          <input type="email" placeholder="Your private email" required>
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <p style="font-size: 0.8rem; margin-top: 2rem; opacity: 0.6;">We do not share data. No spam, only elegance.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo" style="color: var(--antique-gold); font-size: 2.5rem;">AURELIA</div>
+      <div class="footer-links">
+        <a href="#">The Estate</a>
+        <a href="#">Heritage</a>
+        <a href="#">Concierge</a>
+        <a href="#">Discretion</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="social">
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-x-twitter"></i>
+        <i class="fab fa-linkedin-in"></i>
+      </div>
+      <p style="margin-top: 2rem;">© 2025 Aurelia Equine Holdings. All rights reserved. For the few.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in animations
+    const faders = document.querySelectorAll('.fade-in');
+    
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // simple newsletter form alert (fake submission)
+    document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your interest. A confirmation has been sent to your private secretary.');
+      this.reset();
+    });
+  </script>
+
+  <!-- Force visible on older browsers (fallback) -->
+  <noscript>
+    <style>.fade-in { opacity: 1; transform: none; }</style>
+  </noscript>
+</body>
+</html>
